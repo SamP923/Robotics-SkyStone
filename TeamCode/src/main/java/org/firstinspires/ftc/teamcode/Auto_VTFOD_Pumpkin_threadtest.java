@@ -23,8 +23,8 @@ import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocaliz
 /*
  * Created by Sam on 12/10/19
  */
-@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="Auto_Pumpkin: VTFOD//RED Park", group="Pumpkin: VTFOD")
-public class Auto_VTFOD_Pumpkin_RED_Park extends LinearOpMode{
+@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="Auto_Pumpkin: VTFOD//Thread Test", group="Pumpkin: VTFOD")
+public class Auto_VTFOD_Pumpkin_threadtest extends LinearOpMode{
     Hardware_MecanumTest autopumpkin = new Hardware_MecanumTest();
 
     private static final VuforiaLocalizer.CameraDirection CAMERA_CHOICE = BACK;
@@ -226,14 +226,25 @@ public class Auto_VTFOD_Pumpkin_RED_Park extends LinearOpMode{
             ((VuforiaTrackableDefaultListener) trackable.getListener()).setPhoneInformation(robotFromCamera, parameters.cameraDirection);
         }
 
-        boolean trackableFound = false;
-        double targetXCoordinate = -32.5;
-        double targetYCoordinate = -32.5;
-        double targetZCoordinate = 0;
-        double currentXCoordinate = 0;
-        double currentYCoordinate = 0;
 
-        VectorF translation;
+        int n = 8; // Number of threads
+        for (int i=0; i<n; i++)
+        {
+            Thread object = new Thread(new MultithreadingDemo());
+            object.start();
+        }
+
+        boolean trackableFound = false;
+        double targetXCoordinate = 0;
+        double targetYCoordinate = 0;
+        double targetZCoordinate = 0;
+
+        VectorF translation = lastLocation.getTranslation();
+        double currentXCoordinate = translation.get(0) / mmPerInch;
+        double currentYCoordinate = translation.get(1) / mmPerInch;
+        double currentZCoordinate = translation.get(2) / mmPerInch;
+        //String targetTrackable = "Red Perimeter 2";
+
 
         targetsSkyStone.activate();
 
@@ -241,30 +252,13 @@ public class Auto_VTFOD_Pumpkin_RED_Park extends LinearOpMode{
             assumes camera is facing the red perimeter and front of robot is facing the rear perimeter wall
         */
 
-        while ( !targetVisible ){
+        while ( !targetVisible){
             movement(.5,-.5,-.5,.5);
-            telemetry.addData("targetVisible", "NOT FOUND");
-            telemetry.update();
-            if (targetVisible){
-                translation = lastLocation.getTranslation();
-                currentXCoordinate = translation.get(0) / mmPerInch;
-                currentYCoordinate = translation.get(1) / mmPerInch;
-                telemetry.addData("targetVisible", "FOUND");
-                telemetry.update();
-                break;
-                //String targetTrackable = "Red Perimeter 2";
-            }
-
         }
-
         // moving left/right
         while ( currentYCoordinate != targetYCoordinate){
-            if (targetVisible){
-                translation = lastLocation.getTranslation();
-                currentYCoordinate = translation.get(2) / mmPerInch;
-                telemetry.addData("YCoordinate", currentYCoordinate);
-                telemetry.update();
-            }
+            translation = lastLocation.getTranslation();
+            currentYCoordinate = translation.get(2) / mmPerInch;
             if ( currentYCoordinate > targetYCoordinate ){
                 movement(-.5,.5,.5,-.5);// moves RIGHT away from the SkyBridge
             } else if ( currentYCoordinate < targetYCoordinate ){
@@ -273,17 +267,10 @@ public class Auto_VTFOD_Pumpkin_RED_Park extends LinearOpMode{
 
         }
 
-        telemetry.addData("YCoordinate", "FOUND");
-        telemetry.update();
-
         // moving forward/back
         while ( currentXCoordinate != targetXCoordinate){
-            if (targetVisible){
-                translation = lastLocation.getTranslation();
-                currentXCoordinate = translation.get(0) / mmPerInch;
-                telemetry.addData("XCoordinate", currentXCoordinate);
-                telemetry.update();
-            }
+            translation = lastLocation.getTranslation();
+            currentXCoordinate = translation.get(0) / mmPerInch;
 
             if ( currentXCoordinate > targetXCoordinate ){
                 movement(-.5,-.5,-.5,-.5);// moves BACKWARD
@@ -291,9 +278,6 @@ public class Auto_VTFOD_Pumpkin_RED_Park extends LinearOpMode{
                 movement(.5,.5,.5,.5);// moves FORWARD
             }
         }
-
-        telemetry.addData("XCoordinate", "FOUND");
-        telemetry.update();
 
         /*while ( targetVisible != true && trackableFound != true ) {
 
@@ -396,4 +380,25 @@ public class Auto_VTFOD_Pumpkin_RED_Park extends LinearOpMode{
         telemetry.update();
     }*/
 
+}
+
+class MultithreadingDemo implements Runnable
+{
+    public void run()
+    {
+        try
+        {
+            // Displaying the thread that is running
+            System.out.println ("Thread " +
+                    Thread.currentThread().getId() +
+                    " is running");
+            //telemetry.addData("Thread" + Thread.currentThread().getId() + " is running");
+
+        }
+        catch (Exception e)
+        {
+            // Throwing an exception
+            System.out.println ("Exception is caught");
+        }
+    }
 }
