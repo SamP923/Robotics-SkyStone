@@ -5,8 +5,8 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 /*
  * Created by Sam on 11/26/19/
  */
-@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="Auto_Pumpkin: Drive LEFT to Blue", group="Pumpkin: BLUE")
-public class Auto_Pumpkin_DriveToLine extends LinearOpMode{
+@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="Auto_Pumpkin: Drive RIGHT to Blue", group="Pumpkin: BLUE")
+public class Auto_Pumpkin_DriveRIGHTtoBLUE extends LinearOpMode{
     Hardware_MecanumTest autopumpkin = new Hardware_MecanumTest();
     public void runOpMode(){
 
@@ -16,7 +16,7 @@ public class Auto_Pumpkin_DriveToLine extends LinearOpMode{
 
         //moves left until it sees blue
         while (autopumpkin.parkColorS.red() > autopumpkin.parkColorS.blue() || autopumpkin.parkColorS.blue() < 100) {
-            movement(-.5, .5, .5, -.5);
+            movement(.5, -.5, -.5, .5);
         }
 
         movement(0,0,0,0);

@@ -30,9 +30,7 @@ import static org.firstinspires.ftc.robotcore.external.navigation.AxesReference.
 import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.CameraDirection.BACK;
 
 /**
- * Created by Sam on 10/16/2019.
- * Edited 10/16: includes motors for the compliant intake
- * Edited 11/25-27: servo support, telemetry
+ * Created by Sam on 1/07/2020
  ****************************
  *  HORIZONTAL HUB: HUB 2
  *  LC 0         RC 1
