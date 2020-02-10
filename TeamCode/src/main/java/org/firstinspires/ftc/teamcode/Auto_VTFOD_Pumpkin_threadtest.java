@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
@@ -23,6 +24,7 @@ import static org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocaliz
 /*
  * Created by Sam on 12/10/19
  */
+@Disabled
 @com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="Auto_Pumpkin: VTFOD//Thread Test", group="Pumpkin: VTFOD")
 public class Auto_VTFOD_Pumpkin_threadtest extends LinearOpMode{
     Hardware_MecanumTest autopumpkin = new Hardware_MecanumTest();

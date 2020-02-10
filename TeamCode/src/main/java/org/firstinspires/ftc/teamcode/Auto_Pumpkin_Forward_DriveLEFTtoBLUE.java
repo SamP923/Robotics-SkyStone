@@ -18,14 +18,14 @@ public class Auto_Pumpkin_Forward_DriveLEFTtoBLUE extends LinearOpMode{
         movement(.75,.75,.75,.75);
         sleep (600);
 
-        /*//moves LEFT until it sees blue
+        //moves LEFT until it sees blue
         while (autopumpkin.parkColorS.red() > autopumpkin.parkColorS.blue() || autopumpkin.parkColorS.blue() < 100)
         {
             movement(-.5,.5,.5,-.5);
-        }*/
+        }
 
-        movement(-.5,.5,.5,-.5);
-        sleep(1500);
+        //movement(-.5,.5,.5,-.5);
+        //sleep(1500);
 
         movement(0,0,0,0);
     }
