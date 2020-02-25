@@ -15,7 +15,7 @@ public class Auto_Pumpkin_Red_Foundation extends LinearOpMode{
         waitForStart();
 
         // set servos to most compact
-        autopumpkin.blockPusher.setPosition(1);
+        //autopumpkin.blockPusher.setPosition(1);
         autopumpkin.blockStealer.setPosition(1);
 
         movement(.75,-.75,-.75,.75); // move RIGHT to align with FOUNDATION

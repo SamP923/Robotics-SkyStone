@@ -14,31 +14,28 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import java.util.Locale;
 
 /**
- * Created by Sam on 1/13/2020
+ * Created by Sam on 2/24/2020
  ****************************
- *  HORIZONTAL HUB: HUB 2
+ *  VERTICAL HUB: HUB 2
  *  LC 0         RC 1
  *        HUB 2
  *  FB 2
  *
  *  HUB 2: address 3
- *  Servo Port 0: rotateClaw
- *  Servo Port 4: claw
  ****************************
- *  VERTICAL HUB: HUB 1
- *  LF 0         RF 1
+ *  HORIZONTAL HUB: HUB 1
+ *  RB 0         LB 1
  *        HUB 1
- *  LB 2         RB 3
+ *  RF 2         LF 3
  *
  *  HUB 1: address 2
  *  Servo Port 0: blockStealer
- *  Servo Port 5: blockPusher
  ****************************
  */
 
-@TeleOp(name="TeleOp: MecanumTestv1", group="Linear Opmode")
+@TeleOp(name="TeleOp: Mecanum_UPDATED", group="Linear Opmode")
 public class TeleOp_MecanumTest_v1 extends LinearOpMode{
-    Hardware_MecanumTest pumpkin1 = new Hardware_MecanumTest();
+    Hardware_MecanumUPDATED pumpkin1 = new Hardware_MecanumUPDATED();
     double clawPosition, rotatePosition, pusherPosition, servoSpeed, rotateSpeed, stealerPosition;
     double MIN_POSITION = 0; double MAX_POSITION = 1;
     double LOWER_CLAW_LIMIT = .4; double UPPER_CLAW_LIMIT = 1;
@@ -59,7 +56,7 @@ public class TeleOp_MecanumTest_v1 extends LinearOpMode{
 
 
             //rotation - right joystick
-            double rightX = -gamepad1.right_stick_x;
+            double rightX = gamepad1.right_stick_x;
             //movement - left joystick
             double leftX = gamepad1.left_stick_x;
             double leftY = -gamepad1.left_stick_y;
@@ -122,9 +119,9 @@ public class TeleOp_MecanumTest_v1 extends LinearOpMode{
 
             /* ROTATE CLAW - dpad left/dpad right */
             // rotate the claw system servo out using the DPAD_LEFT button if not already at the most open position
-            if (gamepad1.dpad_left ) rotatePosition = rotatePosition + rotateSpeed;
+            if (gamepad1.dpad_left && rotatePosition < MAX_POSITION) rotatePosition = rotatePosition + rotateSpeed;
             // rotate the claw system servo out  using the DPAD_RIGHT button if not already at the most closed position
-            if (gamepad1.dpad_right ) rotatePosition = rotatePosition - rotateSpeed;
+            if (gamepad1.dpad_right && rotatePosition > MIN_POSITION) rotatePosition = rotatePosition - rotateSpeed;
 
 
             /* BLOCK STEALER - y and x */
@@ -141,9 +138,9 @@ public class TeleOp_MecanumTest_v1 extends LinearOpMode{
 
 
             // set the servo values
-            pumpkin1.claw.setPosition(Range.clip(clawPosition, MIN_POSITION, MAX_POSITION));
-            pumpkin1.rotateClaw.setPosition(Range.clip(rotatePosition, MIN_POSITION, MAX_POSITION));
-            pumpkin1.blockPusher.setPosition(Range.clip(pusherPosition, MIN_POSITION, MAX_POSITION));
+            //pumpkin1.claw.setPosition(Range.clip(clawPosition, MIN_POSITION, MAX_POSITION));
+            //pumpkin1.rotateClaw.setPosition(Range.clip(rotatePosition, MIN_POSITION, MAX_POSITION));
+            //pumpkin1.blockPusher.setPosition(Range.clip(pusherPosition, MIN_POSITION, MAX_POSITION));
             pumpkin1.blockStealer.setPosition(Range.clip(stealerPosition, MIN_POSITION,MAX_POSITION));
 
 
@@ -156,9 +153,9 @@ public class TeleOp_MecanumTest_v1 extends LinearOpMode{
 
             telemetry.addData("CONTROLS", "\nintake: LT   outtake: RT\narmup: RB  armdown: LB\nrotatein: dpad_l  rotateout: dp_r\n\n");
             //servo data
-            telemetry.addData("clawPosition", String.format("position=%.2f  actual=%.2f", clawPosition, pumpkin1.claw.getPosition()));
-            telemetry.addData("rotatePosition", String.format("position=%.2f  actual=%.2f", rotatePosition, pumpkin1.rotateClaw.getPosition()));
-            telemetry.addData("pusherPosition", String.format("position=%.2f  actual=%.2f", pusherPosition, pumpkin1.blockPusher.getPosition()));
+            //telemetry.addData("clawPosition", String.format("position=%.2f  actual=%.2f", clawPosition, pumpkin1.claw.getPosition()));
+            //telemetry.addData("rotatePosition", String.format("position=%.2f  actual=%.2f", rotatePosition, pumpkin1.rotateClaw.getPosition()));
+            //telemetry.addData("pusherPosition", String.format("position=%.2f  actual=%.2f", pusherPosition, pumpkin1.blockPusher.getPosition()));
             telemetry.addData("stealerPosition", String.format("position=%.2f  actual=%.2f", stealerPosition, pumpkin1.blockStealer.getPosition()));
 
             //color sensor data

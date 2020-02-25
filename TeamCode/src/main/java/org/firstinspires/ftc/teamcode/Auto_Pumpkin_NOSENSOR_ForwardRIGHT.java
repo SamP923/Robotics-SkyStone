@@ -17,7 +17,7 @@ public class Auto_Pumpkin_NOSENSOR_ForwardRIGHT extends LinearOpMode{
         //move FORWARD
         movement(.75,.75,.75,.75);
         sleep (600);
-        movement(.5,-.5,-.5,o.5);
+        movement(.5,-.5,-.5,.5);
         sleep(1500);
 
         movement(0,0,0,0);

@@ -29,7 +29,7 @@ import com.qualcomm.robotcore.hardware.DistanceSensor;
  ****************************
  */
 
-class Hardware_MecanumTest {
+class Hardware_MecanumUPDATED {
 
     //Drive train:
     DcMotor LFmotor;
@@ -42,9 +42,9 @@ class Hardware_MecanumTest {
 
     DcMotor FourBarmotor;
 
-    Servo claw;
-    Servo rotateClaw;
-    Servo blockPusher;
+    //Servo claw;
+    //Servo rotateClaw;
+    //Servo blockPusher;
     Servo blockStealer;
 
     ColorSensor parkColorS;
