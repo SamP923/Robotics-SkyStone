@@ -62,9 +62,9 @@ class Hardware_MecanumTest {
 
         FourBarmotor = hwMap.dcMotor.get("4Bmotor");
 
-        //claw = hwMap.servo.get("claw");
-        //rotateClaw = hwMap.servo.get("rotateClaw");
-        //blockPusher = hwMap.servo.get("blockPusher");
+        claw = hwMap.servo.get("claw");
+        rotateClaw = hwMap.servo.get("rotateClaw");
+        blockPusher = hwMap.servo.get("blockPusher");
         blockStealer = hwMap.servo.get("blockStealer");
         parkColorS = hwMap.colorSensor.get("parkColorS");
         //stoneColorS = hwMap.colorSensor.get("stoneColorS");

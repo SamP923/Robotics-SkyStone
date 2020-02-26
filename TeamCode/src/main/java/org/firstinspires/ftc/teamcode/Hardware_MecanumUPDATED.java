@@ -6,6 +6,11 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
+import com.qualcomm.robotcore.util.Range;
+
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+
+import java.util.Locale;
 
 /**
  *  Created by Sam on 9/19/2019.
@@ -42,12 +47,13 @@ class Hardware_MecanumUPDATED {
 
     DcMotor FourBarmotor;
 
-    //Servo claw;
-    //Servo rotateClaw;
-    //Servo blockPusher;
-    Servo blockStealer;
+    Servo clawControl;
+    Servo liftClaw;
+    Servo fMover;
 
     ColorSensor parkColorS;
+    ColorSensor stoneColorS;
+    DistanceSensor stoneDistance;
 
     public void init(HardwareMap hwMap){
 
@@ -62,12 +68,13 @@ class Hardware_MecanumUPDATED {
 
         FourBarmotor = hwMap.dcMotor.get("4Bmotor");
 
-        //claw = hwMap.servo.get("claw");
-        //rotateClaw = hwMap.servo.get("rotateClaw");
-        //blockPusher = hwMap.servo.get("blockPusher");
-        blockStealer = hwMap.servo.get("blockStealer");
-        parkColorS = hwMap.colorSensor.get("parkColorS");
-        //stoneColorS = hwMap.colorSensor.get("stoneColorS");
+        clawControl = hwMap.servo.get("clawControl");
+        liftClaw = hwMap.servo.get("liftClaw");
+        fMover = hwMap.servo.get("fMover");
+        parkColorS = hwMap.get(ColorSensor.class, "parkColorS");
+        stoneColorS = hwMap.get(ColorSensor.class, "stoneColorS");
+        stoneDistance = hwMap.get(DistanceSensor.class, "stoneDistance");
+
 
         // set brakes on motors
         LFmotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -91,9 +98,13 @@ class Hardware_MecanumUPDATED {
 
         FourBarmotor.setDirection(DcMotorSimple.Direction.FORWARD);
 
-        //claw.setDirection(Servo.Direction.FORWARD);
+        stopAllMotors();
+        openClaw();
+        rotateClawUpmost();
+        rotateArmUpmost();
+    }
 
-
+    public void stopAllMotors(){
         //set pwr to 0
         LFmotor.setPower(0.0);
         LBmotor.setPower(0.0);
@@ -103,6 +114,44 @@ class Hardware_MecanumUPDATED {
         LCompliantmotor.setPower(0.0);
         RCompliantmotor.setPower(0.0);
         FourBarmotor.setPower(0);
+    }
+
+    public void moveMecanum( int leftY, int rightX, int leftX){
+        double maxPower = 0.5;
+        double minPower = -0.5;
+
+        double LFpower = Range.clip(leftY + rightX + leftX, minPower, maxPower);
+        double RFpower = Range.clip(leftY - rightX - leftX, minPower, maxPower);
+        double LBpower = Range.clip(leftY + rightX - leftX, minPower, maxPower);
+        double RBpower = Range.clip(leftY - rightX + leftX, minPower, maxPower);
+
+        LFmotor.setPower(LFpower);
+        RFmotor.setPower(RFpower);
+        LBmotor.setPower(LBpower);
+        RBmotor.setPower(RBpower);
+    }
+
+    public void openClaw(){
+        clawControl.setPosition(0);
+    }
+
+    public void closeClaw(){
+        clawControl.setPosition(1);
+    }
+
+    public void rotateClawUpmost(){
+        liftClaw.setPosition(1);
+    }
+
+    public void rotateClawDown(){
+        liftClaw.setPosition(0);
+    }
+
+    public void rotateArmUpmost(){
+
+    }
+
+    public void rotateArmDown(){
 
     }
 }

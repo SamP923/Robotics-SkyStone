@@ -15,7 +15,7 @@ public class Auto_Pumpkin_DriveLEFTtoRED extends LinearOpMode{
         waitForStart();
 
         //moves right until it sees red
-        while (autopumpkin.parkColorS.red() < autopumpkin.parkColorS.blue() || autopumpkin.parkColorS.red() < 100)
+        while (autopumpkin.parkColorS.red() < autopumpkin.parkColorS.blue())
         {
             movement(-.5,.5,.5,-.5);
         }

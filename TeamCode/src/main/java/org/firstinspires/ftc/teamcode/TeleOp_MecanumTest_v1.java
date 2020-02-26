@@ -36,9 +36,8 @@ import java.util.Locale;
 @TeleOp(name="TeleOp: Mecanum_UPDATED", group="Linear Opmode")
 public class TeleOp_MecanumTest_v1 extends LinearOpMode{
     Hardware_MecanumUPDATED pumpkin1 = new Hardware_MecanumUPDATED();
-    double clawPosition, rotatePosition, pusherPosition, servoSpeed, rotateSpeed, stealerPosition;
+    double clawPosition, rotatePosition, liftPosition, servoSpeed, rotateSpeed, stealerPosition;
     double MIN_POSITION = 0; double MAX_POSITION = 1;
-    double LOWER_CLAW_LIMIT = .4; double UPPER_CLAW_LIMIT = 1;
     double colorCondition;
 
     @Override
@@ -47,7 +46,7 @@ public class TeleOp_MecanumTest_v1 extends LinearOpMode{
         waitForStart();
 
         clawPosition = .4;
-        pusherPosition = MIN_POSITION;
+        liftPosition = MIN_POSITION;
 
         servoSpeed = .25;
         rotateSpeed = .2;
@@ -111,37 +110,32 @@ public class TeleOp_MecanumTest_v1 extends LinearOpMode{
             // sensor regardless of lighting
             //colorPosition = (colorCondition < 2 ) ? MAX_POSITION : MIN_POSITION;
 
-            /* OPEN/CLOSE CLAW - dpad down/dpad up */
-            // open the claw servo using the DPAD_DOWN button
-            if (gamepad1.dpad_down && clawPosition > LOWER_CLAW_LIMIT) clawPosition = clawPosition - servoSpeed;
-            // close the claw servo using the DPAD_UP button
-            if (gamepad1.dpad_up && clawPosition < UPPER_CLAW_LIMIT) clawPosition = clawPosition + servoSpeed;
-
-            /* ROTATE CLAW - dpad left/dpad right */
+            /* OPEN/CLOSE CLAW - dpad left/dpad right */
             // rotate the claw system servo out using the DPAD_LEFT button if not already at the most open position
+            // DOWN = 1
             if (gamepad1.dpad_left && rotatePosition < MAX_POSITION) rotatePosition = rotatePosition + rotateSpeed;
             // rotate the claw system servo out  using the DPAD_RIGHT button if not already at the most closed position
             if (gamepad1.dpad_right && rotatePosition > MIN_POSITION) rotatePosition = rotatePosition - rotateSpeed;
 
 
-            /* BLOCK STEALER - y and x */
+            /* Foundation movers - y and x */
             // put UP the block stealer servo using the X button
             if (gamepad1.x && stealerPosition < .75) stealerPosition= stealerPosition + servoSpeed;
-            // put DOWN the block stealer servo using the Y button
+            // put DOWN the foundation mover servos using the Y button
             if (gamepad1.y && stealerPosition > MIN_POSITION) stealerPosition = stealerPosition - servoSpeed;
 
-            /* BLOCK PUSHER - a/b */
-            // rotate the block pusher servo OUT using the A button if not already at the most open position
-            if (gamepad1.a && pusherPosition < MAX_POSITION) pusherPosition = 1;
-            // rotate the block pusher servo IN using the B button if not already at the most in position
-            if (gamepad1.b && pusherPosition > MIN_POSITION) pusherPosition = 0;
+            /* Lift Claw - a/b */
+            // rotate the new arm servo OUT using the A button if not already at the most open position
+            // UP = 1
+            if (gamepad1.dpad_up && liftPosition < MAX_POSITION) liftPosition = 1;
+            // rotate the new arm servo IN using the B button if not already at the most in position
+            if (gamepad1.dpad_down && liftPosition > MIN_POSITION) liftPosition = 0;
 
 
             // set the servo values
-            //pumpkin1.claw.setPosition(Range.clip(clawPosition, MIN_POSITION, MAX_POSITION));
-            //pumpkin1.rotateClaw.setPosition(Range.clip(rotatePosition, MIN_POSITION, MAX_POSITION));
-            //pumpkin1.blockPusher.setPosition(Range.clip(pusherPosition, MIN_POSITION, MAX_POSITION));
-            pumpkin1.blockStealer.setPosition(Range.clip(stealerPosition, MIN_POSITION,MAX_POSITION));
+            pumpkin1.clawControl.setPosition(Range.clip(rotatePosition, MIN_POSITION, MAX_POSITION));
+            pumpkin1.liftClaw.setPosition(Range.clip(liftPosition, MIN_POSITION, MAX_POSITION));
+            pumpkin1.fMover.setPosition(Range.clip(stealerPosition, MIN_POSITION,MAX_POSITION));
 
 
             /*
@@ -153,10 +147,10 @@ public class TeleOp_MecanumTest_v1 extends LinearOpMode{
 
             telemetry.addData("CONTROLS", "\nintake: LT   outtake: RT\narmup: RB  armdown: LB\nrotatein: dpad_l  rotateout: dp_r\n\n");
             //servo data
-            //telemetry.addData("clawPosition", String.format("position=%.2f  actual=%.2f", clawPosition, pumpkin1.claw.getPosition()));
-            //telemetry.addData("rotatePosition", String.format("position=%.2f  actual=%.2f", rotatePosition, pumpkin1.rotateClaw.getPosition()));
-            //telemetry.addData("pusherPosition", String.format("position=%.2f  actual=%.2f", pusherPosition, pumpkin1.blockPusher.getPosition()));
-            telemetry.addData("stealerPosition", String.format("position=%.2f  actual=%.2f", stealerPosition, pumpkin1.blockStealer.getPosition()));
+
+            telemetry.addData("rotatePosition", String.format("position=%.2f  actual=%.2f", rotatePosition, pumpkin1.clawControl.getPosition()));
+            telemetry.addData("liftPosition", String.format("position=%.2f  actual=%.2f", liftPosition, pumpkin1.liftClaw.getPosition()));
+            telemetry.addData("stealerPosition", String.format("position=%.2f  actual=%.2f", stealerPosition, pumpkin1.fMover.getPosition()));
 
             //color sensor data
             telemetry.addData("PARK COLOR SENSOR", "");
