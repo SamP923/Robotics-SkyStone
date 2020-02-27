@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 /*
  * Created by Sam on 2/25/2020
  */
-@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="Auto_Pumpkin: Drive LEFT NO COLOR SENS", group="Pumpkin: NoSensors")
+@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="NO_SENSORS: Drive LEFT ONLY", group="Pumpkin: NoSensors")
 public class Auto_Pumpkin_NOSENSOR_LEFTonly extends LinearOpMode{
     Hardware_MecanumTest autopumpkin = new Hardware_MecanumTest();
     public void runOpMode(){

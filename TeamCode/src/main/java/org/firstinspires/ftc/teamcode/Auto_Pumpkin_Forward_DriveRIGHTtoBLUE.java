@@ -1,10 +1,12 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 /*
  * Created by Sam on 12/10/19
  */
+@Disabled
 @com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="Auto_Pumpkin: Forward//Drive RIGHT to Blue", group="Pumpkin: BLUE")
 public class Auto_Pumpkin_Forward_DriveRIGHTtoBLUE extends LinearOpMode{
     Hardware_MecanumTest autopumpkin = new Hardware_MecanumTest();

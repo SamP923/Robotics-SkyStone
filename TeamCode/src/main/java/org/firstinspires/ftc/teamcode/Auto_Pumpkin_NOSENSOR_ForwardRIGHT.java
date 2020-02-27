@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 /*
  * Created by Sam on 2/9/20
  */
-@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="Auto_Pumpkin: FORWARD AND RIGHT", group="Pumpkin: NoSensors")
+@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="NO_SENSORS: FORWARD AND RIGHT", group="Pumpkin: NoSensors")
 public class Auto_Pumpkin_NOSENSOR_ForwardRIGHT extends LinearOpMode{
     Hardware_MecanumTest autopumpkin = new Hardware_MecanumTest();
     public void runOpMode(){

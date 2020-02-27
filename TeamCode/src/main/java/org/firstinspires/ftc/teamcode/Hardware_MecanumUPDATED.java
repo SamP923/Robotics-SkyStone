@@ -73,7 +73,7 @@ class Hardware_MecanumUPDATED {
         fMover = hwMap.servo.get("fMover");
         parkColorS = hwMap.get(ColorSensor.class, "parkColorS");
         stoneColorS = hwMap.get(ColorSensor.class, "stoneColorS");
-        stoneDistance = hwMap.get(DistanceSensor.class, "stoneDistance");
+        stoneDistance = hwMap.get(DistanceSensor.class, "stoneColorS");
 
 
         // set brakes on motors
@@ -99,9 +99,9 @@ class Hardware_MecanumUPDATED {
         FourBarmotor.setDirection(DcMotorSimple.Direction.FORWARD);
 
         stopAllMotors();
-        openClaw();
-        rotateClawUpmost();
-        rotateArmUpmost();
+        closeClaw();
+        rotateArmIn();
+        rotateMotorArmIn();
     }
 
     public void stopAllMotors(){
@@ -139,19 +139,19 @@ class Hardware_MecanumUPDATED {
         clawControl.setPosition(1);
     }
 
-    public void rotateClawUpmost(){
+    public void rotateArmIn(){
         liftClaw.setPosition(1);
     }
 
-    public void rotateClawDown(){
+    public void rotateArmDown(){
         liftClaw.setPosition(0);
     }
 
-    public void rotateArmUpmost(){
+    public void rotateMotorArmIn(){
 
     }
 
-    public void rotateArmDown(){
+    public void rotateMotorArmOut(){
 
     }
 }
