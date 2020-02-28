@@ -19,48 +19,57 @@ public class Auto_Pumpkin_BlueSkystones extends LinearOpMode{
 
         waitForStart();
 
-        //robot front facing towards foundation side
+        /*
+            starts with FRONT facing towards foundation side
+        */
+
 
         //move backwards toward building site
         movement(-.5,-.5,-.5,-.5);
-        sleep(2000);
+        sleep(1000);// CHECK THIS VALUE FOR GOING BACK FAR/CLOSE ENOUGH
         movement(0,0,0,0);
         sleep(100);
 
         //move right towards skystones, wait until it sees it
-        /*
-        while ( autopumpkin.stoneDistance.getDistance(DistanceUnit.CM) > 25 ){
-            movement(0.3,-0.3,-0.3,0.3);
-        }*/
+        SENSmoveRightTowardsStones();
+        sleep(500);// pause
 
-        //move right no sensors
-        movement(0.3,-0.3,-0.3,0.3);
-        sleep(1000);
+        //move backwards to find skystone and grab it once found
+        while ( autopumpkin.isSkystone() ){
+            movement(-0.3,-0.3,-0.3,-0.3);
+        }
+        sleep(200);// CHECK THIS VALUE FOR MIDDLE OF STONE
+        grabStone();
+
+        //move towards foundation side, drop the stone, reset positions
+        SENSmoveTowardsFoundation();
+        dropStone();
+
+        //go park next to bridge
+        while ( autopumpkin.parkBlue())
+        {
+            movement(-.5,-.5,-.5,-.5);
+        }
+
+
         movement(0,0,0,0);
-        sleep(1000);
+        //end program and ensure stop
+        autopumpkin.stopAllMotors();
 
+
+    }
+
+    public void grabStone(){
         //grab stone
         rotateMotorArmOut();
-        autopumpkin.closeClaw();
-        sleep(1000);
-        autopumpkin.openClaw();
-        sleep(1000);
         autopumpkin.closeClaw();
         sleep(1000);
 
         //lift stone
         rotateMotorArmWSS();
+    }
 
-        //move towards foundation side color sensor
-        /*
-
-         */
-
-        // move towards foundation side no sensors
-        movement(.5,.5,.5,.5);
-        sleep(2000);
-        movement(0,0,0,0);
-
+    public void dropStone(){
         //put back stone
         rotateMotorArmOut();
 
@@ -68,29 +77,40 @@ public class Auto_Pumpkin_BlueSkystones extends LinearOpMode{
         autopumpkin.openClaw();
         sleep(500);
 
-        //first reset(mid)
+        //first reset
         rotateMotorArmIn();
         autopumpkin.closeClaw();
-        sleep(1000);
+        sleep(750);
         autopumpkin.rotateArmIn();
-        sleep(1000);
+        sleep(750);
+    }
 
-        //go park
-        /* //color sensor
-        while (autopumpkin.parkColorS.red() > autopumpkin.parkColorS.blue())
-        {
-            movement(-.5,-.5,-.5,-.5);
+    public void SENSmoveRightTowardsStones(){
+        // CHECK THIS FOR DISTANCE UNIT
+        while ( autopumpkin.stoneDistance.getDistance(DistanceUnit.CM) > 25 ){
+            movement(0.3,-0.3,-0.3,0.3);
         }
-        */
-
-        movement(-.5,-.5,-.5,-.5);
-        sleep(1500);
         movement(0,0,0,0);
+    }
 
-        //end program
-        autopumpkin.stopAllMotors();
+    public void NSmoveRightTowardsStones(){
+        movement(0.3,-0.3,-0.3,0.3);
+        sleep(1000);// CHECK THIS FOR MOVEMENT TOWARDS STONES
+        movement(0,0,0,0);
+    }
+    public void SENSmoveTowardsFoundation(){
+        //looks for tape to go over
+        while (autopumpkin.parkBlue()){
+            movement(.5,.5,.5,.5);
+        }
+        sleep(500);// CHECK THIS VALUE TO MAKE SURE IT MOVES PAST THE BRIDGE TAPE
+        movement(0,0,0,0);
+    }
 
-
+    public void NSmoveTowardsFoundation(){
+        movement(.5,.5,.5,.5);
+        sleep(2000);// CHECK THIS VALUE TO MAKE SURE IT MOVES PAST THE BRIDGE TAPE
+        movement(0,0,0,0);
     }
 
     public void movement(double LF, double LB, double RF, double RB)

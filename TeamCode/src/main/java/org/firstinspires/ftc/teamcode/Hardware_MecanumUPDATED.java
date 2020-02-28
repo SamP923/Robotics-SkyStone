@@ -1,4 +1,5 @@
 package org.firstinspires.ftc.teamcode;
+import android.graphics.Color;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -13,7 +14,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import java.util.Locale;
 
 /**
- *  Created by Sam on 9/19/2019.
+ *  Created by Sam on 2/26/2020
  ****************************
  *  HORIZONTAL HUB: HUB 2
  *  LC 0         RC 1
@@ -55,7 +56,9 @@ class Hardware_MecanumUPDATED {
     ColorSensor stoneColorS;
     DistanceSensor stoneDistance;
 
-    private double motorArmSleep = 1200;
+    private long motorArmSleep = 1200;
+    private long forwardAutoSleep = 1000;
+    private long distanceToParkSleep = 1500;
 
     public void init(HardwareMap hwMap){
 
@@ -132,6 +135,14 @@ class Hardware_MecanumUPDATED {
         RBmotor.setPower(RBpower);
     }
 
+    public void movement(double LF, double LB, double RF, double RB)
+    {
+        LFmotor.setPower(LF);
+        LBmotor.setPower(LB);
+        RFmotor.setPower(RF);
+        RBmotor.setPower(RB);
+    }
+
     public void openClaw(){
         clawControl.setPosition(0);
     }
@@ -145,10 +156,48 @@ class Hardware_MecanumUPDATED {
     }
 
     public void rotateArmOut(){
-        liftClaw.setPosition(1);
+        liftClaw.setPosition(0.98);
     }
 
-    public double getMotorArmSleep(){
+    public long getMotorArmSleep(){
         return motorArmSleep;
+    }
+    public long getForwardAutoSleep(){
+        return forwardAutoSleep;
+    }
+    public long getDistanceToParkSleep(){
+        return distanceToParkSleep;
+    }
+
+    public boolean isSkystone() {
+        float hsvValues[] = {0F, 0F, 0F};
+
+        // sometimes it helps to multiply the raw RGB values with a scale factor
+        // to amplify/attentuate the measured values.
+        final double SCALE_FACTOR = 255;
+
+
+        Color.RGBToHSV((int) (stoneColorS.red() * SCALE_FACTOR),
+                (int) (stoneColorS.green() * SCALE_FACTOR),
+                (int) (stoneColorS.blue() * SCALE_FACTOR),
+                hsvValues);
+
+
+        //BLACK and WHITE
+        if (hsvValues[0] > 100 && hsvValues[0] < 150) {
+            return true;
+        }
+        return false;
+
+    }
+
+    public boolean parkBlue(){
+        if ( parkColorS.red() > parkColorS.blue() ) return true;
+        else return false;
+    }
+
+    public boolean parkRed(){
+        if ( parkColorS.red() > parkColorS.blue() ) return true;
+        else return false;
     }
 }

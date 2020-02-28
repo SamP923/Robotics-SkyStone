@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 /*
  * Created by Sam on 2/27/2020
  */
-@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="Auto_Pumpkin: DriveFORWARDtoRED", group="Pumpkin: RED")
+@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="SENS: DriveFORWARDtoRED", group="Pumpkin: RED")
 public class Auto_Pumpkin_DriveFORWARDtoRED extends LinearOpMode{
     Hardware_MecanumUPDATED autopumpkin = new Hardware_MecanumUPDATED();
     public void runOpMode(){
@@ -16,7 +16,7 @@ public class Auto_Pumpkin_DriveFORWARDtoRED extends LinearOpMode{
         waitForStart();
 
         //moves RIGHT until it sees blue
-        while (autopumpkin.parkColorS.blue() > autopumpkin.parkColorS.red())
+        while (autopumpkin.parkRed())
         {
             movement(.5,.5,.5,.5);
         }

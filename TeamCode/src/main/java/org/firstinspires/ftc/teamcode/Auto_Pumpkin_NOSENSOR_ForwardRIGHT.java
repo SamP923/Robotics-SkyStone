@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
  */
 @com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="NO_SENSORS: FORWARD AND RIGHT", group="Pumpkin: NoSensors")
 public class Auto_Pumpkin_NOSENSOR_ForwardRIGHT extends LinearOpMode{
-    Hardware_MecanumTest autopumpkin = new Hardware_MecanumTest();
+    Hardware_MecanumUPDATED autopumpkin = new Hardware_MecanumUPDATED();
     public void runOpMode(){
 
         autopumpkin.init(hardwareMap);
@@ -15,19 +15,11 @@ public class Auto_Pumpkin_NOSENSOR_ForwardRIGHT extends LinearOpMode{
         waitForStart();
 
         //move FORWARD
-        movement(.75,.75,.75,.75);
-        sleep (600);
-        movement(.5,-.5,-.5,.5);
-        sleep(1500);
+        autopumpkin.movement(.75,.75,.75,.75);
+        sleep (autopumpkin.getForwardAutoSleep());
+        autopumpkin.movement(.5,-.5,-.5,.5);
+        sleep(autopumpkin.getDistanceToParkSleep());
 
-        movement(0,0,0,0);
-    }
-
-    public void movement(double LF, double LB, double RF, double RB)
-    {
-        autopumpkin.LFmotor.setPower(LF);
-        autopumpkin.LBmotor.setPower(LB);
-        autopumpkin.RFmotor.setPower(RF);
-        autopumpkin.RBmotor.setPower(RB);
+        autopumpkin.stopAllMotors();
     }
 }
