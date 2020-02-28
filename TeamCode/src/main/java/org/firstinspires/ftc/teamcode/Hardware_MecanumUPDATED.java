@@ -55,6 +55,8 @@ class Hardware_MecanumUPDATED {
     ColorSensor stoneColorS;
     DistanceSensor stoneDistance;
 
+    private double motorArmSleep = 1200;
+
     public void init(HardwareMap hwMap){
 
         // assigns names
@@ -101,7 +103,6 @@ class Hardware_MecanumUPDATED {
         stopAllMotors();
         closeClaw();
         rotateArmIn();
-        rotateMotorArmIn();
     }
 
     public void stopAllMotors(){
@@ -140,18 +141,14 @@ class Hardware_MecanumUPDATED {
     }
 
     public void rotateArmIn(){
-        liftClaw.setPosition(1);
-    }
-
-    public void rotateArmDown(){
         liftClaw.setPosition(0);
     }
 
-    public void rotateMotorArmIn(){
-
+    public void rotateArmOut(){
+        liftClaw.setPosition(1);
     }
 
-    public void rotateMotorArmOut(){
-
+    public double getMotorArmSleep(){
+        return motorArmSleep;
     }
 }
