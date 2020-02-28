@@ -3,10 +3,10 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 /*
- * Created by Sam on 2/9/20
+ * Created by Sam on 2/25/2020
  */
-@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="NO_SENSORS: FORWARD AND LEFT", group="Pumpkin: NoSensors")
-public class Auto_Pumpkin_NOSENSOR_ForwardLEFT extends LinearOpMode{
+@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="NO_SENSORS: Drive LEFT ONLY", group="Pumpkin: NoSensors")
+public class Auto_Pumpkin_NOSENSOR_LEFTonly extends LinearOpMode{
     Hardware_MecanumUPDATED autopumpkin = new Hardware_MecanumUPDATED();
     public void runOpMode(){
 
@@ -14,12 +14,11 @@ public class Auto_Pumpkin_NOSENSOR_ForwardLEFT extends LinearOpMode{
 
         waitForStart();
 
-        //move FORWARD
-        autopumpkin.movement(.75,.75,.75,.75);
-        sleep (autopumpkin.getForwardAutoSleep());
         autopumpkin.movement(-.5,.5,.5,-.5);
+
         sleep(autopumpkin.getDistanceToParkSleep());
 
         autopumpkin.stopAllMotors();
+
     }
 }
