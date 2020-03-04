@@ -3,10 +3,10 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 /*
- * Created by Sam on 12/10/19
+ * Created by Sam on 12/10/2019
  */
-@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="Auto_Pumpkin: Forward//Drive LEFT to RED", group="Pumpkin: RED")
-public class Auto_Pumpkin_Forward_DriveLEFTtoRED extends LinearOpMode{
+@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="Auto_Pumpkin: Drive RIGHT to Red", group="Pumpkin: RED")
+public class Auto_Pumpkin_DriveRIGHTtoRED extends LinearOpMode{
     Hardware_MecanumTest autopumpkin = new Hardware_MecanumTest();
     public void runOpMode(){
 
@@ -14,19 +14,15 @@ public class Auto_Pumpkin_Forward_DriveLEFTtoRED extends LinearOpMode{
 
         waitForStart();
 
-        //move FORWARD
-        movement(.75,.75,.75,.75);
-        sleep (1000);
-
-        //moves LEFT until it sees red
+        //moves right until it sees red
         while (autopumpkin.parkColorS.red() < autopumpkin.parkColorS.blue() || autopumpkin.parkColorS.red() < 100)
         {
-            movement(-.5,.5,.5,-.5);
+            movement(.5,-.5,-.5,.5);
         }
 
         movement(0,0,0,0);
-    }
 
+    }
     public void movement(double LF, double LB, double RF, double RB)
     {
         autopumpkin.LFmotor.setPower(LF);

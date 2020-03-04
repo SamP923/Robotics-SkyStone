@@ -1,29 +1,26 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 /*
- * Created by Sam on 2/27/2020
+ * Created by Sam on 12/10/2019
  */
-@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="SENS: DriveFORWARDtoBLUE", group="Pumpkin: BLUE")
-public class Auto_Pumpkin_DriveFORWARDtoBLUE extends LinearOpMode{
-    Hardware_MecanumUPDATED autopumpkin = new Hardware_MecanumUPDATED();
+@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="Auto_Pumpkin: Drive LEFT NO COLOR SENS", group="Pumpkin: NoSensors")
+public class Auto_Pumpkin_DriveLEFTonly extends LinearOpMode{
+    Hardware_MecanumTest autopumpkin = new Hardware_MecanumTest();
     public void runOpMode(){
 
         autopumpkin.init(hardwareMap);
 
         waitForStart();
 
-        //moves FORWARD until it sees blue
-        while (autopumpkin.parkBlue())
-        {
-            movement(.5,.5,.5,.5);
-        }
+        movement(-.5,.5,.5,-.5);
+
+        sleep(2000);
 
         movement(0,0,0,0);
-    }
 
+    }
     public void movement(double LF, double LB, double RF, double RB)
     {
         autopumpkin.LFmotor.setPower(LF);

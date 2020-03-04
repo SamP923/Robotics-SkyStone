@@ -91,7 +91,7 @@ class Hardware_MecanumTest {
 
         FourBarmotor.setDirection(DcMotorSimple.Direction.FORWARD);
 
-        //claw.setDirection(Servo.Direction.FORWARD);
+        claw.setDirection(Servo.Direction.FORWARD);
 
 
         //set pwr to 0

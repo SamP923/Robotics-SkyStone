@@ -1,15 +1,13 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 /*
  * Created by Sam on 12/10/19
  */
-@Disabled
 @com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="Auto_Pumpkin: Forward//Drive LEFT to Blue", group="Pumpkin: BLUE")
 public class Auto_Pumpkin_Forward_DriveLEFTtoBLUE extends LinearOpMode{
-    Hardware_MecanumUPDATED autopumpkin = new Hardware_MecanumUPDATED();
+    Hardware_MecanumTest autopumpkin = new Hardware_MecanumTest();
     public void runOpMode(){
 
         autopumpkin.init(hardwareMap);
@@ -17,15 +15,26 @@ public class Auto_Pumpkin_Forward_DriveLEFTtoBLUE extends LinearOpMode{
         waitForStart();
 
         //move FORWARD
-        autopumpkin.movement(.75,.75,.75,.75);
-        sleep (autopumpkin.getForwardAutoSleep());
+        movement(.75,.75,.75,.75);
+        sleep (600);
 
         //moves LEFT until it sees blue
-        while (autopumpkin.parkBlue())
+        while (autopumpkin.parkColorS.red() > autopumpkin.parkColorS.blue() || autopumpkin.parkColorS.blue() < 100)
         {
-            autopumpkin.movement(-.5,.5,.5,-.5);
+            movement(-.5,.5,.5,-.5);
         }
 
-        autopumpkin.stopAllMotors();
+        //movement(-.5,.5,.5,-.5);
+        //sleep(1500);
+
+        movement(0,0,0,0);
+    }
+
+    public void movement(double LF, double LB, double RF, double RB)
+    {
+        autopumpkin.LFmotor.setPower(LF);
+        autopumpkin.LBmotor.setPower(LB);
+        autopumpkin.RFmotor.setPower(RF);
+        autopumpkin.RBmotor.setPower(RB);
     }
 }
